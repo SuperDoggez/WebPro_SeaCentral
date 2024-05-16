@@ -17,16 +17,16 @@ export const authOptions: NextAuthOptions = {
         CredentialsProvider({
           name: "Credentials",
           credentials: {
-            email: { label: "Email", type: "email"},
+            username: { label: "Email", type: "email"},
             password: { label: "Password", type: "password" }
           },
           async authorize(credentials) {
-            if (!credentials?.email || !credentials?.password) {
+            if (!credentials?.username || !credentials?.password) {
               return null
             }
             
-            const user = await prismadb.user.findUnique({           
-                where: { email: credentials.email }         
+            const user = await prismadb.admin.findUnique({           
+                where: { username: credentials.username }         
             })
             if (!user) {
                 throw new Error('Invalid email')
@@ -37,8 +37,6 @@ export const authOptions: NextAuthOptions = {
               return {
                 id: `${user.id}`,
                 username: user.username,
-                email: user.email,
-                isAdmin: user.isAdmin
               }
             } else {
               throw new Error('Invalid password')
@@ -53,7 +51,6 @@ export const authOptions: NextAuthOptions = {
             return {
               username: user.username,
               id: user.id,
-              isAdmin: user.isAdmin,
               ...token
             }
           }
@@ -65,8 +62,7 @@ export const authOptions: NextAuthOptions = {
             user: {
               ...session.user,
               id: token.id,
-              username: token.username,
-              isAdmin: token.isAdmin
+              username: token.username
             }
           }
         },

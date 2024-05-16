@@ -80,3 +80,10 @@ model Tourist_info {
   for_other      Boolean
   Booking        Booking[]
 }
+
+model Admin {
+  id        Int         @id @default(autoincrement())
+  username  String      @unique
+  password  String
+}
+

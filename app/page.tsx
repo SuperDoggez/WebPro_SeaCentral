@@ -1,7 +1,7 @@
 'use client'
 import * as React from 'react';
 import Navbar from "@/components/navbar";
-import CalendarPicker from "@/components/calendarpicker";
+import CalendarPicker from "@/components/CalendarPicker";
 
 export default function Home() {
 

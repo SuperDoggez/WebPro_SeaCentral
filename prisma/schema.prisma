@@ -1,0 +1,82 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Booking {
+  id            Int             @id
+  checkin       DateTime        @db.Date
+  checkout      DateTime        @db.Date
+  description   String?         @db.VarChar(150)
+  status        String          @db.VarChar(10)
+  total_price   Int
+  tourist_id    Int
+  Book_activity Book_activity[]
+  Book_room     Book_room[]
+  tourist_info  Tourist_info    @relation(fields: [tourist_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tourist_id")
+}
+
+model Activity {
+  id             Int             @id(map: "activity_pkey") @default(autoincrement())
+  name           String
+  price          Int             @db.SmallInt
+  discount_price Int             @db.SmallInt
+  picture        String[]
+  per_person     Int             @db.SmallInt
+  Book_activity  Book_activity[]
+}
+
+model Book_activity {
+  book_id     Int
+  activity_id Int
+  Activity    Activity @relation(fields: [activity_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "book_activity_activity")
+  Booking     Booking  @relation(fields: [book_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "book_activity_book")
+
+  @@id([activity_id, book_id])
+}
+
+model Book_room {
+  book_id Int
+  room_id Int
+  Booking Booking @relation(fields: [book_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "book_room_book")
+  Room    Room    @relation(fields: [room_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "book_room_room")
+
+  @@id([book_id, room_id])
+}
+
+model Room {
+  id        Int         @id(map: "room_pkey") @default(autoincrement())
+  status    String      @db.VarChar(10)
+  room_type Int
+  Book_room Book_room[]
+  Room_type Room_type   @relation(fields: [room_type], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "room_type")
+}
+
+model Room_type {
+  id            Int      @id(map: "room_type_pkey") @default(autoincrement())
+  name          String   @db.VarChar(15)
+  price         Int      @db.SmallInt
+  twin_bed      Int      @db.SmallInt
+  double_bed    Int      @db.SmallInt
+  description   String
+  picture       String[]
+  swimming_pool Boolean
+  bath_tub      Boolean
+  Room          Room[]
+}
+
+model Tourist_info {
+  id             Int       @id(map: "tourist_info_pkey")
+  first_name     String    @db.VarChar(50)
+  last_name      String    @db.VarChar(50)
+  email          String    @db.VarChar(50)
+  phone_number   String    @db.VarChar(10)
+  phone_number_2 String?   @db.VarChar(10)
+  country        String
+  for_other      Boolean
+  Booking        Booking[]
+}

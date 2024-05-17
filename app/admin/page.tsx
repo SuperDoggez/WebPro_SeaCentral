@@ -22,7 +22,7 @@ export default function Profile() {
       <div className="flex h-screen items-center justify-center text-black">
         <div className="bg-white p-6 rounded-md shadow-md">
           <p>
-            Welcome, admin <b>{session.user.username}!</b>
+            Welcome, Admin <b>{session.user.username}!</b>
           </p>
           <p>Email: {session.user.email}</p>
           <p>ID: {session.user.id}</p>

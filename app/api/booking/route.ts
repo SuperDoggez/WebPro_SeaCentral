@@ -10,7 +10,7 @@ export async function POST(req: Request) {
 
         const checkin_date = new Date(checkin)
         const checkout_date = new Date(checkout)
-
+        
         const newTourist = await prismadb.tourist_info.create({
             data: {
                 first_name,
@@ -34,6 +34,7 @@ export async function POST(req: Request) {
                 tourist_id:newTourist.id
             }
         })
+
 
         if (room_type_id) {
             for (let i = 0;i < room_type_id.length; i++) {
@@ -77,7 +78,6 @@ export async function POST(req: Request) {
             message: "Book room succesfully"
         }, { status: 201 })
     
-        return NextResponse.json({message:"hi"})
     } catch (error) {
         
         console.log(error);

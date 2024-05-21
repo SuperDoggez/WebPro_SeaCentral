@@ -29,6 +29,7 @@ model Activity {
   picture        String[]
   per_person     Int             @db.SmallInt
   service_time   String
+  description    String
   Book_activity  Book_activity[]
   Package        Package[]
 }
@@ -103,4 +104,11 @@ model Book_package {
   id         Int     @id @default(autoincrement())
   Booking    Booking @relation(fields: [book_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "book_package_book")
   Package    Package @relation(fields: [package_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "book_package_package")
+}
+
+model Hotel_info {
+  contact String
+  address String
+
+  @@id([contact, address])
 }

@@ -17,7 +17,7 @@ export async function PUT(req: Request) {
 
         return NextResponse.json({
             Room:newRoom,
-            message: "Room information have been changed"
+            message: "Room information have been changed."
         })
 
 
@@ -43,7 +43,7 @@ export async function GET(req: Request) {
 
         return NextResponse.json({
             room:allroom,
-            message: "All Room information have been sent succesfully"
+            message: "All Room information have been sent succesfully."
         }) 
 
     } catch (error) {

@@ -15,6 +15,9 @@ model Booking {
   total_price   Int
   tourist_id    Int
   checkout      DateTime        @db.Date
+  datetime      DateTime        @db.Timestamptz(6)
+  adult         String
+  children      String
   Book_activity Book_activity[]
   Book_package  Book_package[]
   Book_room     Book_room[]

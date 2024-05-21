@@ -15,7 +15,7 @@ export async function PUT(req: Request) {
 
         return NextResponse.json({
             Hotelinfo:newContact,
-            message: "Hotel contact and address have been changed"
+            message: "Hotel contact and address have been changed."
         })
 
 
@@ -33,7 +33,7 @@ export async function GET(req: Request) {
 
         return NextResponse.json({
             Hotelinfo:contact,
-            message: "Hotel contact and address have been sent succesfully"
+            message: "Hotel contact and address have been sent succesfully."
         }) 
 
     } catch (error) {

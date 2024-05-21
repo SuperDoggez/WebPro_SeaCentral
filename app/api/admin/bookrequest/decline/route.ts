@@ -46,13 +46,13 @@ export async function PUT(req: Request) {
                     booking:booking,
                     room:room,
                     activity:activity,
-                    message: "Book room and activity request have been rejected"
+                    message: "Book room and activity request have been rejected."
                 })
             }
             return NextResponse.json({
                 booking:booking,
                 room:room,
-                message: "Book room request have been rejected"
+                message: "Book room request have been rejected."
             })
         } else {
             const package_ = await prismadb.book_package.updateMany({
@@ -64,7 +64,7 @@ export async function PUT(req: Request) {
 
             return NextResponse.json({
                 package:package_,
-                message: "Book package request have been rejected"
+                message: "Book package request have been rejected."
             })
         }
 

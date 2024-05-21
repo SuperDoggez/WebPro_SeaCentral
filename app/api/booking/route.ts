@@ -10,6 +10,8 @@ export async function POST(req: Request) {
 
         const checkin_date = new Date(checkin)
         const checkout_date = new Date(checkout)
+
+        const data = new Date()
         
         const newTourist = await prismadb.tourist_info.create({
             data: {
@@ -31,7 +33,8 @@ export async function POST(req: Request) {
                 checkin:checkin_date,
                 checkout:checkout_date,
                 status: "pending",
-                tourist_id:newTourist.id
+                tourist_id:newTourist.id,
+                datetime:data.toISOString()
             }
         })
 

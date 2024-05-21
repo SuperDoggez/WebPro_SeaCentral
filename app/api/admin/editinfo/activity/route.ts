@@ -18,7 +18,7 @@ export async function PUT(req: Request) {
 
         return NextResponse.json({
             Activity:newActivity,
-            message: "Activity have been changed"
+            message: "Activity have been changed."
         })
 
 
@@ -36,7 +36,7 @@ export async function GET(req: Request) {
 
         return NextResponse.json({
             Activity:activity,
-            message: "Activity have been sent succesfully"
+            message: "Activity have been sent succesfully."
         }) 
 
     } catch (error) {

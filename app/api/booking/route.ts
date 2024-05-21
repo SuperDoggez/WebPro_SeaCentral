@@ -6,12 +6,15 @@ export async function POST(req: Request) {
     try {
         const id = Math.floor(Math.random() * Date.now())
         
-        const { first_name, last_name, email, phone_number, phone_number_2, description, total_price, country, for_other, checkin, checkout, room_type_id, activity_id, package_id} = await req.json()
+        const { first_name, last_name, email, phone_number, 
+            phone_number_2, description, total_price, country, 
+            for_other, checkin, checkout, room_type_id, activity_id, 
+            package_id, adult, children} = await req.json()
 
         const checkin_date = new Date(checkin)
         const checkout_date = new Date(checkout)
 
-        const data = new Date()
+        const date = new Date()
         
         const newTourist = await prismadb.tourist_info.create({
             data: {
@@ -34,7 +37,9 @@ export async function POST(req: Request) {
                 checkout:checkout_date,
                 status: "pending",
                 tourist_id:newTourist.id,
-                datetime:data.toISOString()
+                datetime:date.toISOString(),
+                adult,
+                children
             }
         })
 

@@ -4,7 +4,7 @@ import { prismadb } from "@/lib/db";
 export async function POST(req: Request) {
     
     try {
-        const id = Math.floor(Math.random() * Date.now())
+        const id = Math.floor(Math.random() * 100000000)
         
         const { first_name, last_name, email, phone_number, 
             phone_number_2, description, total_price, country, 
@@ -38,8 +38,8 @@ export async function POST(req: Request) {
                 status: "pending",
                 tourist_id:newTourist.id,
                 datetime:date.toISOString(),
-                adult,
-                children
+                adult:String(adult),
+                children:String(children)
             }
         })
 
@@ -81,9 +81,9 @@ export async function POST(req: Request) {
         }
 
         return NextResponse.json({
-            booking:{...newBooking,id:newBooking.id.toString()},
+            booking:{newBooking},
             tourist:newTourist,
-            message: "Book room succesfully"
+            message: "Booking request has been sent succesfully."
         }, { status: 201 })
     
     } catch (error) {

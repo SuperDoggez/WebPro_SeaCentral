@@ -21,7 +21,7 @@ export async function GET(req: Request) {
         })
 
         return NextResponse.json({
-            book:book_req,
+            booking:book_req,
             message: "All book request have been sent successfully."
         }) 
         

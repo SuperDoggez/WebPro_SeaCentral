@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Booking {
-  id            BigInt          @id
+  id            Int             @id
   checkin       DateTime        @db.Date
   description   String?         @db.VarChar(150)
   status        String          @db.VarChar(10)
@@ -38,7 +38,7 @@ model Activity {
 }
 
 model Book_activity {
-  book_id     BigInt
+  book_id     Int
   activity_id Int
   status      String   @db.VarChar(10)
   id          Int      @id @default(autoincrement())
@@ -47,7 +47,7 @@ model Book_activity {
 }
 
 model Book_room {
-  book_id      BigInt
+  book_id      Int
   status       String    @db.VarChar(10)
   room_type_id Int
   id           Int       @id @default(autoincrement())
@@ -101,7 +101,7 @@ model Package {
 }
 
 model Book_package {
-  book_id    BigInt
+  book_id    Int
   package_id Int
   status     String  @db.VarChar(10)
   id         Int     @id @default(autoincrement())

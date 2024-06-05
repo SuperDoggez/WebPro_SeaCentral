@@ -5,7 +5,7 @@ import { compare } from "bcrypt";
 
 export const authOptions: NextAuthOptions = {
     pages: {
-        signIn: '/login'
+        signIn: '/secretlogin'
     },
     secret: process.env.NEXTAUTH_SECRET,
     session: {
@@ -17,16 +17,16 @@ export const authOptions: NextAuthOptions = {
         CredentialsProvider({
           name: "Credentials",
           credentials: {
-            username: { label: "Email", type: "email"},
+            email: { label: "Email", type: "email"},
             password: { label: "Password", type: "password" }
           },
           async authorize(credentials) {
-            if (!credentials?.username || !credentials?.password) {
+            if (!credentials?.email || !credentials?.password) {
               return null
             }
             
             const user = await prismadb.admin.findUnique({           
-                where: { username: credentials.username }         
+                where: { email: credentials.email }         
             })
             if (!user) {
                 throw new Error('Invalid email')
@@ -37,6 +37,7 @@ export const authOptions: NextAuthOptions = {
               return {
                 id: `${user.id}`,
                 username: user.username,
+                email: user.email
               }
             } else {
               throw new Error('Invalid password')

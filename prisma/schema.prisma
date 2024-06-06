@@ -17,7 +17,7 @@ model Booking {
   checkout      DateTime        @db.Date
   adult         String
   children      String
-  datetime      DateTime        @db.Timestamptz(6)
+  datetime      DateTime        @db.Timestamp(6)
   Book_activity Book_activity[]
   Book_package  Book_package[]
   Book_room     Book_room[]

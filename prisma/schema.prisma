@@ -15,9 +15,9 @@ model Booking {
   total_price   Int
   tourist_id    Int
   checkout      DateTime        @db.Date
-  datetime      DateTime        @db.Timestamptz(6)
   adult         String
   children      String
+  datetime      DateTime        @db.Timestamptz(6)
   Book_activity Book_activity[]
   Book_package  Book_package[]
   Book_room     Book_room[]
@@ -32,8 +32,8 @@ model Activity {
   picture        String[]
   per_person     Int             @db.SmallInt
   description    String
-  start          String          @db.VarChar(5)
   end            String          @db.VarChar(5)
+  start          String          @db.VarChar(5)
   Book_activity  Book_activity[]
   Package        Package[]
 }

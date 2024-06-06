@@ -96,6 +96,7 @@ export async function PUT(req: Request) {
             })
 
             return NextResponse.json({
+                booking:booking,
                 package:package_,
                 message: "Book package request have been accepted."
             })

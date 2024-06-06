@@ -15,6 +15,10 @@ export async function POST(req: Request) {
         const checkout_date = new Date(checkout)
 
         const date = new Date()
+        const hour = 7
+        const datetime = new Date(date.getTime() + (hour * 60 * 60 * 1000))
+        
+        console.log(date);
         
         const newTourist = await prismadb.tourist_info.create({
             data: {
@@ -37,7 +41,7 @@ export async function POST(req: Request) {
                 checkout:checkout_date,
                 status: "pending",
                 tourist_id:newTourist.id,
-                datetime:date.toISOString(),
+                datetime,
                 adult:String(adult),
                 children:String(children)
             }

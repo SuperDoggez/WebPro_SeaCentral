@@ -18,8 +18,6 @@ export async function POST(req: Request) {
         const hour = 7
         const datetime = new Date(date.getTime() + (hour * 60 * 60 * 1000))
         
-        console.log(date);
-        
         const newTourist = await prismadb.tourist_info.create({
             data: {
                 first_name,
@@ -85,7 +83,7 @@ export async function POST(req: Request) {
         }
 
         return NextResponse.json({
-            booking:{newBooking},
+            booking:newBooking,
             tourist:newTourist,
             message: "Booking request has been sent succesfully."
         }, { status: 201 })

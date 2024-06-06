@@ -95,6 +95,7 @@ model Package {
   description  String
   room_type    Int
   activity     Int
+  name         String
   Book_package Book_package[]
   Activity     Activity       @relation(fields: [activity], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "package_activity")
   Room_type    Room_type      @relation(fields: [room_type], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "room_type_package")

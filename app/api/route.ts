@@ -14,7 +14,7 @@ export async function PUT(req: Request) {
     }
 }
 
-export async function GET(req: Request,params : { id: string}) {
+export async function GET(req: Request,{ params } : { params : { id: string }}) {
     try {
         
     } catch (error) {

@@ -1,5 +1,14 @@
 import { NextResponse } from "next/server";
 import { prismadb } from "@/lib/db";
+import { email, transport } from "@/lib/email";
+import { acceptedemail } from "@/lib/email";
+
+interface Tourist {
+    id: number,
+    email: string,
+    first_name: string,
+    last_name: string
+}
 
 export async function PUT(req: Request) {
     try {
@@ -8,6 +17,7 @@ export async function PUT(req: Request) {
         const find_booking = await prismadb.booking.findUnique({
             where: { id:id },
             select: {
+                tourist_id:true,
                 Book_room:true,
                 Book_activity:true,
                 Book_package:true
@@ -20,6 +30,29 @@ export async function PUT(req: Request) {
                 message: "Booking not found"
             })
         }
+
+        const tourist: Tourist | null = await prismadb.tourist_info.findUnique({
+            where: { id:find_booking.tourist_id },
+            select: {
+                id:true,
+                email:true,
+                first_name:true,
+                last_name:true
+            }
+        })
+
+        if (!tourist) {
+            return null
+        }
+
+        await transport.verify()
+        
+        await transport.sendMail({
+            from: email.email,
+            to: tourist?.email,
+            subject: "SeaCentral accept booking request.",
+            html: acceptedemail(id,`${tourist.first_name}`,`${tourist.last_name}`)
+        })
 
         const booking = await prismadb.booking.update({
             where: { id:id },
@@ -63,6 +96,7 @@ export async function PUT(req: Request) {
             })
 
             return NextResponse.json({
+                booking:booking,
                 package:package_,
                 message: "Book package request have been accepted."
             })

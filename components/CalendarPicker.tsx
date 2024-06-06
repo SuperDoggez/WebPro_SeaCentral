@@ -85,7 +85,8 @@ export const CalendarPicker: React.FC = () => {
                       <InputNumber className='hidden' value={valueChildren} onChange={setValueChildren} scrollable={false}/>
                       <InputGroup.Button onClick={handlePlusChildren}>+</InputGroup.Button>
                     </InputGroup>
-                  </Stack></div>
+                </Stack>
+                </div>
                   
               </div>
               

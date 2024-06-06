@@ -111,7 +111,7 @@ export async function GET(req: Request,{ params } : { params : { id: string }}) 
             const uniqueactivityid = [... new Set(activity_id)]
             activitycount = uniqueactivityid.map(id => ({
                 id,
-                count: activity_id.filter(activityid => activityid = id).length
+                count: activity_id.filter(activityid => activityid === id).length
             }))
         }
 

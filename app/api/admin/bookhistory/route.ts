@@ -20,6 +20,11 @@ export async function GET(req: Request) {
                     select: {
                         room_type_id:true
                     }
+                },
+                Book_package: {
+                    select: {
+                        package_id:true
+                    }
                 }
             }
         })

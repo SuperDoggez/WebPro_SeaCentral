@@ -3,7 +3,7 @@ import { prismadb } from "@/lib/db";
 
 export async function GET(req: Request) {
     try {
-        const book_req = await prismadb.booking.findMany({
+        const booking_req = await prismadb.booking.findMany({
             where: { status: 'pending' },
             select: {
                 id:true,
@@ -16,12 +16,17 @@ export async function GET(req: Request) {
                     select: {
                         room_type_id:true
                     }
+                },
+                Book_package: {
+                    select: {
+                        package_id:true
+                    }
                 }
             }
         })
 
         return NextResponse.json({
-            booking:book_req,
+            booking:booking_req,
             message: "All book request have been sent successfully."
         }) 
         

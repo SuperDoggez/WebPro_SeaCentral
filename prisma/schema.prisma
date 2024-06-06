@@ -31,8 +31,9 @@ model Activity {
   discount_price Int             @db.SmallInt
   picture        String[]
   per_person     Int             @db.SmallInt
-  service_time   String
   description    String
+  start          String          @db.VarChar(5)
+  end            String          @db.VarChar(5)
   Book_activity  Book_activity[]
   Package        Package[]
 }

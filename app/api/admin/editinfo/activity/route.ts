@@ -4,15 +4,17 @@ import exp from "constants";
 
 export async function PUT(req: Request) {
     try {
-        const { id, name, description, price, per_person} = await req.json()
+        const { id, name, description, price, per_person, start, end} = await req.json()
         
         const newActivity = await prismadb.activity.update({
-            where: { id:id },
+            where: { id:parseInt(id) },
             data: {
                 name, 
                 description, 
-                price, 
-                per_person
+                discount_price:price, 
+                per_person,
+                start,
+                end
             }
         })
 
@@ -32,7 +34,17 @@ export async function PUT(req: Request) {
 
 export async function GET(req: Request) {
     try {
-        const activity = await prismadb.activity.findMany()
+        const activity = await prismadb.activity.findMany({
+            select: {
+                id:true,
+                name:true,
+                start:true,
+                end:true,
+                discount_price:true,
+                per_person:true,
+                picture:true
+            }
+        })
 
         return NextResponse.json({
             Activity:activity,

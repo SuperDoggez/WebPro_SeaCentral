@@ -7,17 +7,17 @@ import Link from 'next/link';
 export const CalendarPicker: React.FC = () => {
   const [checkInDate, setCheckInDate] = useState<string>('');
   const [checkOutDate, setCheckOutDate] = useState<string>('');
-  const [valueAdults, setValueAdults] = useState<number>(0);
-  const [valueChildren, setValueChildren] = useState<number>(0);
+  const [adult, setValueAdults] = useState<number>(0);
+  const [children, setValueChildren] = useState<number>(0);
 
   const handleMinus = () => {
-    if (valueAdults > 0) {
-      setValueAdults(valueAdults - 1);
+    if (adult > 0) {
+      setValueAdults(adult - 1);
     }
   };
 
   const handlePlus = () => {
-    setValueAdults(valueAdults + 1);
+    setValueAdults(adult + 1);
   };
 
   const handleCheckIn = (date: Date | null) => {
@@ -33,13 +33,13 @@ export const CalendarPicker: React.FC = () => {
   }
 
   const handleMinusChildren = () => {
-    if (valueChildren > 0) {
-      setValueChildren(valueChildren - 1);
+    if (children > 0) {
+      setValueChildren(children - 1);
     }
   };
 
   const handlePlusChildren = () => {
-    setValueChildren(valueChildren + 1);
+    setValueChildren(children + 1);
   };
 
  
@@ -72,7 +72,7 @@ export const CalendarPicker: React.FC = () => {
                   <Stack direction="column" alignItems="flex-start" spacing={10}>
                     <InputGroup>
                       <InputGroup.Button onClick={handleMinus}>-</InputGroup.Button>
-                      <InputNumber className='hidden' value={valueAdults} onChange={setValueAdults} scrollable={false}/>
+                      <InputNumber className='hidden' value={adult} onChange={setValueAdults} scrollable={false}/>
                       <InputGroup.Button onClick={handlePlus}>+</InputGroup.Button>
                     </InputGroup>
                   </Stack>
@@ -82,7 +82,7 @@ export const CalendarPicker: React.FC = () => {
                 <Stack direction="column" alignItems="flex-start" spacing={10}>
                     <InputGroup>
                       <InputGroup.Button onClick={handleMinusChildren}>-</InputGroup.Button>
-                      <InputNumber className='hidden' value={valueChildren} onChange={setValueChildren} scrollable={false}/>
+                      <InputNumber className='hidden' value={children} onChange={setValueChildren} scrollable={false}/>
                       <InputGroup.Button onClick={handlePlusChildren}>+</InputGroup.Button>
                     </InputGroup>
                 </Stack>
@@ -96,7 +96,7 @@ export const CalendarPicker: React.FC = () => {
                   จองห้องพัก
                 </div>
                 
-                <Link href={`/booking?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&valueAdults=${valueAdults}&valueChildren=${valueChildren}`}
+                <Link href={`/booking?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&adult=${adult}&children=${children}`}
                   className='flex font-bold w-1/3 justify-center items-center text-xl'>
                   จองห้องพัก
                 </Link>

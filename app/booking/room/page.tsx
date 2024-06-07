@@ -3,6 +3,10 @@ import React, { useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { StateRoomType } from './StateRoomType';
 import { StateActivities } from './StateActivities';
+import { StateInformation } from './StateInformation';
+import { StateInformationCheck } from './StateInformationCheck';
+import { StateConfirmation } from './StateConfirmation';
+
 
 interface RoomDataProp {
   id: number;
@@ -21,19 +25,41 @@ export default function room() {
   const searchParams = useSearchParams();
   const checkInDate = searchParams.get('checkInDate');
   const checkOutDate = searchParams.get('checkOutDate');
-  const valueAdults = searchParams.get('valueAdults');
-  const valueChildren = searchParams.get('valueChildren');
+  const adult = searchParams.get('adult');
+  const children = searchParams.get('children');
   const [roomvalues, setroomValues] = useState<number[]>([]);
   const [roomtype, setRoomtype] = useState<RoomDataProp[]>([]);
   const [ActivitiesValue, setActivitiesValues] = useState<number[]>([]);
   const [ActivitiesType, setActivitiesType] = useState<RoomDataProp[]>([]);
+  const [booking_id, setBookingId] = useState<number>(0);
 
-  console.log("roomtype", roomtype);
-  console.log("roomvalues", roomvalues);
-  console.log("checkInDate", checkInDate);
-  console.log("checkOutDate", checkOutDate);
-  console.log("valueAdults", valueAdults);
-  console.log("valueChildren", valueChildren);
+  console.log(booking_id,"booking_id")
+  const [formData, setFormData] = useState({ first_name: "", last_name: "", phone_number: "", phone_number_2: "", email: "", country: "", description: "", for_other: false});
+
+  const handleFormSubmit = (data: { first_name: string; last_name: string; phone_number: string; phone_number_2: string; email: string; country: string; description: string ; for_other: boolean ;}) => {
+    setFormData(data);
+  };
+
+  const total_price_room = roomtype
+    .filter((room, index) => roomvalues[index] !== 0)
+    .reduce((sum, room) => {
+        const originalIndex = roomtype.indexOf(room);
+        return sum + Number(room.price) * Number(roomvalues[originalIndex]);
+  }, 0);
+
+
+  const total_activities_price = ActivitiesType
+    .filter((activity, index) => ActivitiesValue[index] !== 0)
+    .reduce((sum, activity) => {
+        const originalIndex = ActivitiesType.indexOf(activity);
+        return sum + Number(activity.price) * Number(ActivitiesValue[originalIndex]);
+    }, 0);
+
+  const total_price = total_price_room + total_activities_price;
+
+  
+
+  console.log("formData", formData);
 
   return (
     <>
@@ -43,12 +69,13 @@ export default function room() {
           setroomValues={setroomValues}
           checkInDate={checkInDate}
           checkOutDate={checkOutDate}
-          valueAdults={valueAdults}
-          valueChildren={valueChildren}
+          adult={adult}
+          children={children}
           setStatePage={setStatePage}
           StatePage={StatePage}
           setRoomtype={setRoomtype}
           roomtype={roomtype}
+          total_price_room={total_price}
         />
       )}
 
@@ -61,17 +88,68 @@ export default function room() {
           setActivitiesValues={setActivitiesValues}
           checkInDate={checkInDate}
           checkOutDate={checkOutDate}
-          valueAdults={valueAdults}
-          valueChildren={valueChildren}
+          adult={adult}
+          children={children}
           setStatePage={setStatePage}
           StatePage={StatePage}
           setRoomtype={setRoomtype}
           roomtype={roomtype}
           ActivitiesType={ActivitiesType}
           setActivitiesType={setActivitiesType}
+          total_price_room={total_price}
         />
+      )}
 
+      {StatePage === 2 && (
+        <StateInformation 
+          roomvalues={roomvalues}
+          setroomValues={setroomValues}
+          ActivitiesValues={ActivitiesValue}
+          setActivitiesValues={setActivitiesValues}
+          checkInDate={checkInDate}
+          checkOutDate={checkOutDate}
+          adult={adult}
+          children={children}
+          setStatePage={setStatePage}
+          StatePage={StatePage}
+          setRoomtype={setRoomtype}
+          roomtype={roomtype}
+          ActivitiesType={ActivitiesType}
+          setActivitiesType={setActivitiesType}
+          onFormSubmit={handleFormSubmit}
+          total_price_room={total_price}
+          total_activities_price={total_activities_price}
+        />
+      )}
 
+      {StatePage === 3 && (
+        <StateInformationCheck
+          roomvalues={roomvalues}
+          setroomValues={setroomValues}
+          ActivitiesValues={ActivitiesValue}
+          setActivitiesValues={setActivitiesValues}
+          checkInDate={checkInDate}
+          checkOutDate={checkOutDate}
+          adult={adult}
+          children={children}
+          setStatePage={setStatePage}
+          StatePage={StatePage}
+          setRoomtype={setRoomtype}
+          roomtype={roomtype}
+          ActivitiesType={ActivitiesType}
+          setActivitiesType={setActivitiesType}
+          onFormSubmit={handleFormSubmit}
+          formData={formData}
+          total_price_room={total_price}
+          setBookingId={setBookingId}
+          booking_id={booking_id}
+        />
+      )}
+
+      {StatePage === 4 && (
+        <StateConfirmation
+          booking_id={booking_id}
+        />
       )}
     </>
   );

@@ -20,10 +20,11 @@ interface StateRoomTypeProps {
     setStatePage: Dispatch<SetStateAction<number>>;
     checkInDate: string | null;
     checkOutDate: string | null;
-    valueAdults: string | null;
-    valueChildren: string | null;
+    adult: string | null;
+    children: string | null;
     roomtype: RoomTypeProp[];
     setRoomtype: Dispatch<SetStateAction<RoomTypeProp[]>>;
+    total_price_room: number;
 }
 
 export const StateRoomType: FC<StateRoomTypeProps> = ({
@@ -31,11 +32,12 @@ export const StateRoomType: FC<StateRoomTypeProps> = ({
     setroomValues,
     checkInDate,
     checkOutDate,
-    valueAdults,
-    valueChildren,
+    adult,
+    children,
     setStatePage,
     roomtype,
     setRoomtype,
+    total_price_room,
 }) => {
 
 
@@ -66,7 +68,7 @@ export const StateRoomType: FC<StateRoomTypeProps> = ({
       }
     };
     fetchData();
-  }, [checkInDate, checkOutDate, valueAdults, valueChildren]);
+  }, [checkInDate, checkOutDate, adult, children]);
 
   
   return (
@@ -74,8 +76,8 @@ export const StateRoomType: FC<StateRoomTypeProps> = ({
       <div>เลือกประเภทห้องพัก</div>
       <div>ChechkingDate: {checkInDate}</div>
       <div>CheckoutDate: {checkOutDate}</div>
-      <div>Adults: {valueAdults}</div>
-      <div>Children: {valueChildren}</div>
+      <div>Adults: {adult}</div>
+      <div>Children: {children}</div>
       <div className="p-8">
         {roomtype.map((room, index) => (
           <div key={room.id} className="mt-8">

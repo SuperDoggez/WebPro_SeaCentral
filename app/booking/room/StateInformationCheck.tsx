@@ -1,7 +1,6 @@
 import React, { useState, useEffect, Dispatch, SetStateAction, FC} from 'react';
-import { InputGroup, InputNumber, Stack } from 'rsuite';
-import room from './page';
-
+import Input from '@mui/joy/Input';
+import axios from 'axios';
 
 interface ActivitiesTypeProp {
     id: number;
@@ -27,7 +26,7 @@ interface RoomTypeProp {
     bath_tub: boolean;
 }
 
-interface StateActivitiesProps {
+interface StateInformationCheckProps {
     roomvalues: number[];
     setroomValues: Dispatch<SetStateAction<number[]>>;
     ActivitiesValues: number[];
@@ -42,10 +41,14 @@ interface StateActivitiesProps {
     setRoomtype: Dispatch<SetStateAction<RoomTypeProp[]>>;
     ActivitiesType: ActivitiesTypeProp[];
     setActivitiesType: Dispatch<SetStateAction<ActivitiesTypeProp[]>>;
+    onFormSubmit: (formData: { first_name: string; last_name: string; phone_number: string; phone_number_2: string; email: string; country: string; description: string ;for_other: boolean ;}) => void;
+    formData: { first_name: string; last_name: string; phone_number: string; phone_number_2: string; email: string; country: string; description: string; for_other: boolean };
     total_price_room: number;
-}
-
-export const StateActivities: FC<StateActivitiesProps> = ({
+    booking_id: number;
+    setBookingId: Dispatch<SetStateAction<number>>;
+  }
+  
+export const StateInformationCheck: FC<StateInformationCheckProps> = ({
     roomvalues,
     setroomValues,
     ActivitiesValues,
@@ -59,41 +62,60 @@ export const StateActivities: FC<StateActivitiesProps> = ({
     setRoomtype,
     ActivitiesType,
     setActivitiesType,
+    onFormSubmit,
+    formData,
     total_price_room,
+    booking_id,
+    setBookingId
 }) => {
-    const axios = require('axios');
 
-    
 
-    const handleMinus = (index: number) => {
-        setActivitiesValues(ActivitiesValues.map((value, i) => (i === index && value > 0 ? value - 1 : value)));
-    };
 
-    const handlePlus = (index: number) => {
-        setActivitiesValues(ActivitiesValues.map((value, i) => (i === index ? value + 1 : value)));
-    };
+  function changeArrayValues(values: Array<number>) {
+    const result = [];
+    for (let i = 0; i < values.length; i++) {
+        const count = values[i];
+        const indexValue = i + 1; // Index starts at 1
+        for (let j = 0; j < count; j++) {
+            result.push(indexValue);
+        }
+    }
+    return result;
+  }
 
-    const handleValueChange = (index: number, value: number) => {
-        setActivitiesValues(ActivitiesValues.map((v, i) => (i === index ? value : v)));
-    };
+  const roomvaluesArray = changeArrayValues(roomvalues);
+  const ActivitiesvaluesArray = changeArrayValues(ActivitiesValues);
+  const checkin = checkInDate;
+  const checkout = checkOutDate;
+  const total_price = total_price_room;
+  const IntChildren = Number(children);
+  const IntAdult = Number(adult);
 
-    useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const response = await axios.get('/api/activity');
-            setActivitiesType(response.data.activity);
-            setActivitiesValues(new Array(response.data.activity.length).fill(0));
-            
-          } catch (error) {
-            console.log(error);
-          }
-        };
-        fetchData();
-      },[checkInDate, checkOutDate, adult, children]
-    )
+  const combinedData = {
+    ...formData,
+    room_type_id: roomvaluesArray,
+    checkin,
+    checkout,
+    adult: IntAdult,
+    children: IntChildren,
+    activity_id: ActivitiesvaluesArray,
+    total_price,
+  };
 
-    console.log(roomtype,"roomtype")
-    console.log(roomvalues,"roomvalues")
+  console.log("roomvalues", roomvalues);
+  console.log("Activitiesvalues", ActivitiesValues);
+  console.log("combinedData", combinedData);
+
+    const handleSubmitBooking = async () => {
+      try{
+        const response = await axios.post('/api/booking', combinedData);
+        setBookingId(response.data.booking.id);
+        setStatePage(4);
+      }catch{
+        console.log("error");
+      }
+    }
+
 
     return (
         <div>
@@ -103,22 +125,19 @@ export const StateActivities: FC<StateActivitiesProps> = ({
           <div>Adults: {adult}</div>
           <div>Children: {children}</div>
           <div className="p-8">
-            {ActivitiesType.map((activity, index) => (
-              <div key={activity.id} className="mt-8">
-                <div>{activity.name}</div>
-                <div>
-                  <Stack>
-                    <InputGroup>
-                      <InputGroup.Button onClick={() => handleMinus(index)}>-</InputGroup.Button>
-                      <InputNumber value={ActivitiesValues[index]} onChange={(value) => handleValueChange(index, Number(value) || 0)} />
-                      <InputGroup.Button onClick={() => handlePlus(index)}>+</InputGroup.Button>
-                    </InputGroup>
-                  </Stack>
-                </div>
-              </div>
-            ))}
+                <Input value={formData.first_name} disabled/>
+                <Input value={formData.last_name} disabled/>
+                <Input value={formData.phone_number} disabled/>
+                <Input value={formData.phone_number_2} disabled/>
+                <Input value={formData.email} disabled/>
+                <Input value={formData.country} disabled/>
+                <Input value={formData.description} disabled/>
+                <input type="checkbox" checked={formData.for_other} disabled/>
+      
+          <div> 
+              <button onClick={handleSubmitBooking}>Submit</button>
+            </div>
           </div>
-
 
           <div className="flex flex-col">
           {roomtype
@@ -150,8 +169,6 @@ export const StateActivities: FC<StateActivitiesProps> = ({
           </div>
           
             {total_price_room}
-          <div onClick={() => setStatePage(0)}>ย้อนกลับ</div>
-          <div onClick={() => setStatePage(2)}>ดำเนินการต่อ</div>
         </div>
       );
 }

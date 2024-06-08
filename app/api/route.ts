@@ -1,10 +1,9 @@
 import { NextResponse } from "next/server";
 import { prismadb } from "@/lib/db";
 
-export async function PUT(req: Request) {
+export async function POUT(req: Request) {
     try {
         
-
         
     } catch (error) {
 

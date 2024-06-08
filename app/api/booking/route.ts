@@ -4,13 +4,20 @@ import { prismadb } from "@/lib/db";
 export async function POST(req: Request) {
     
     try {
-        const id = Math.floor(Math.random() * Date.now())
+        const id = Math.floor(Math.random() * 100000000)
         
-        const { first_name, last_name, email, phone_number, phone_number_2, description, total_price, country, for_other, checkin, checkout, room_type_id, activity_id, package_id} = await req.json()
+        const { first_name, last_name, email, phone_number, 
+            phone_number_2, description, total_price, country, 
+            for_other, checkin, checkout, room_type_id, activity_id, 
+            package_id, adult, children} = await req.json()
 
         const checkin_date = new Date(checkin)
         const checkout_date = new Date(checkout)
 
+        const date = new Date()
+        const hour = 7
+        const datetime = new Date(date.getTime() + (hour * 60 * 60 * 1000))
+        
         const newTourist = await prismadb.tourist_info.create({
             data: {
                 first_name,
@@ -31,9 +38,13 @@ export async function POST(req: Request) {
                 checkin:checkin_date,
                 checkout:checkout_date,
                 status: "pending",
-                tourist_id:newTourist.id
+                tourist_id:newTourist.id,
+                datetime,
+                adult:String(adult),
+                children:String(children)
             }
         })
+
 
         if (room_type_id) {
             for (let i = 0;i < room_type_id.length; i++) {
@@ -72,12 +83,11 @@ export async function POST(req: Request) {
         }
 
         return NextResponse.json({
-            booking:{...newBooking,id:newBooking.id.toString()},
+            booking:newBooking,
             tourist:newTourist,
-            message: "Book room succesfully"
+            message: "Booking request has been sent succesfully."
         }, { status: 201 })
     
-        return NextResponse.json({message:"hi"})
     } catch (error) {
         
         console.log(error);

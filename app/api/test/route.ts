@@ -1,31 +1,38 @@
 import { NextResponse } from "next/server";
 import { prismadb } from "@/lib/db";
+import { supabase } from "@/lib/supabase";
 
-export async function GET(req: Request) {
-    
+export async function POST(req: Request) {
     try {
-        const room_type_id = [1,1,1,1,2,3,2]
-        const id = 101
+        const formdata = await req.formData()
 
-        for (let i = 0;i < room_type_id.length; i++) {
-            const book = await prismadb.book_room.create({
-                data: { 
-                    book_id:id,
-                    room_type_id:room_type_id[i],
-                    status: 'pending'
-                }
-            })
+        const image = formdata.get('image') as File
+        const filename = `activity/waterskii.png`
+        const filePath = `${filename}`;
+        async function uploadImage(file: File) {
+            try {
+              const { error } = await supabase.storage
+                .from('sea-central') 
+                .upload(filePath, file, {
+                  cacheControl: '3600',
+                  upsert: false,
+                });
+          
+              if (error) {
+                throw error;
+              }
+              const { data } = await supabase.storage.from("sea-central").getPublicUrl(filePath);
+              return data.publicUrl;
+            } catch (error) {
+              console.error('Error uploading image:', error);
+              throw error;
+            }
         }
-
-        const find = await prismadb.book_room.findMany({
-            where: { book_id:id }
-        })
-        
+        const img = await uploadImage(image)
         return NextResponse.json({
-            output:find,
-            message: "testing"
-        }, { status: 200 })
-    
+            image:img,
+            message: "Upload image successfully"
+        })
         
     } catch (error) {
         

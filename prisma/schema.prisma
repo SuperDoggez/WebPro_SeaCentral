@@ -8,13 +8,16 @@ datasource db {
 }
 
 model Booking {
-  id            BigInt          @id
+  id            Int             @id
   checkin       DateTime        @db.Date
   description   String?         @db.VarChar(150)
   status        String          @db.VarChar(10)
   total_price   Int
   tourist_id    Int
   checkout      DateTime        @db.Date
+  adult         String
+  children      String
+  datetime      DateTime        @db.Timestamp(6)
   Book_activity Book_activity[]
   Book_package  Book_package[]
   Book_room     Book_room[]
@@ -28,13 +31,15 @@ model Activity {
   discount_price Int             @db.SmallInt
   picture        String[]
   per_person     Int             @db.SmallInt
-  service_time   String
+  description    String
+  end            String          @db.VarChar(5)
+  start          String          @db.VarChar(5)
   Book_activity  Book_activity[]
   Package        Package[]
 }
 
 model Book_activity {
-  book_id     BigInt
+  book_id     Int
   activity_id Int
   status      String   @db.VarChar(10)
   id          Int      @id @default(autoincrement())
@@ -43,7 +48,7 @@ model Book_activity {
 }
 
 model Book_room {
-  book_id      BigInt
+  book_id      Int
   status       String    @db.VarChar(10)
   room_type_id Int
   id           Int       @id @default(autoincrement())
@@ -91,16 +96,24 @@ model Package {
   description  String
   room_type    Int
   activity     Int
+  name         String
   Book_package Book_package[]
   Activity     Activity       @relation(fields: [activity], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "package_activity")
   Room_type    Room_type      @relation(fields: [room_type], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "room_type_package")
 }
 
 model Book_package {
-  book_id    BigInt
+  book_id    Int
   package_id Int
   status     String  @db.VarChar(10)
   id         Int     @id @default(autoincrement())
   Booking    Booking @relation(fields: [book_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "book_package_book")
   Package    Package @relation(fields: [package_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "book_package_package")
+}
+
+model Hotel_info {
+  contact String
+  address String
+
+  @@id([contact, address])
 }

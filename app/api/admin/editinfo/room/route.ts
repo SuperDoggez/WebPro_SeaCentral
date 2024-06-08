@@ -4,12 +4,15 @@ import exp from "constants";
 
 export async function PUT(req: Request) {
     try {
-        const { id, price, swimming_pool, bath_tub} = await req.json()
+        const { id, description, price, double_bed, twin_bed, swimming_pool, bath_tub} = await req.json()
         
         const newRoom = await prismadb.room_type.update({
             where: { id:id },
             data: {
+                description,
                 price,
+                twin_bed,
+                double_bed,
                 swimming_pool,
                 bath_tub
             }

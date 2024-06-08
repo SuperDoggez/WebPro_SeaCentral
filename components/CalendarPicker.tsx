@@ -1,9 +1,10 @@
 'use client'
 import React, { useState } from 'react'
 import 'rsuite/dist/rsuite-no-reset.min.css';
-import { DatePicker, InputGroup, InputNumber, Stack } from 'rsuite';
+import { Button, DatePicker, InputGroup, InputNumber, Stack } from 'rsuite';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { el } from 'date-fns/locale';
 
 
 export const CalendarPicker: React.FC = () => {
@@ -62,7 +63,14 @@ export const CalendarPicker: React.FC = () => {
     setValueChildren(children + 1);
   };
 
- 
+  const BookingHandler = () => {
+    if (statePage === 0) {
+      router.push(`/booking?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&adult=${adult}&children=${children}`)
+    }
+    else if (statePage === 1) {
+      setStatePage(0)
+    }
+  }
   return (
     <>
    
@@ -139,10 +147,14 @@ export const CalendarPicker: React.FC = () => {
                   เช็คสถานะการจอง
                 </div>
                 
-                <Link href={`/booking?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&adult=${adult}&children=${children}`}
+                {/* <Link href={`/booking?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&adult=${adult}&children=${children}`} */}
+                  <button 
+                  onClick={BookingHandler}
+                  disabled={checkInDate === '' || checkOutDate === '' || adult === 0 }
                   className='flex font-bold w-2/3 justify-center items-center text-xl'>
-                  จองห้องพัก
-                </Link>
+                    จองห้องพัก
+                  </button>
+                {/* </Link> */}
             </div>
         </div>
     </>

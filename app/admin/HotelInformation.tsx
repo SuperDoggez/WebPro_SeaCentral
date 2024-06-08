@@ -12,10 +12,9 @@ export default function HotelInformation () {
   useEffect(() => {
         const fetchData = async () => {
         try {
-            const response = await axios.get(`/api/activity`);
-
-            
-            console.log(room, "response.data");
+            const response = await axios.get(`/api/admin/editinfo/contact`);    
+            setTempContact(response.data.contact);
+            setTempEmail(response.data.email);        
         } catch {
             console.log('Error fetching data');
         } 
@@ -27,12 +26,8 @@ export default function HotelInformation () {
 const handleSave = async () => {
     try {
         const response = await axios.put(`/api/admin/editinfo/activity`, {
-            id: activityId,
-            description: tempDescription,
-            price: tempPrice,
-            start: tempStart,
-            end: tempEnd,
-            per_person: tempPer
+            contact: TempContact,
+            email: TempEmail, 
 
         });
         console.log(response.data, "response.data");
@@ -42,13 +37,10 @@ const handleSave = async () => {
 }
 
 const handleCancel = () => {
-    if (!activityData) return ;
+    if (!TempContact || !TempEmail) return ;
 
-    setTempDescription(activityData.description);
-    setTempPrice(activityData.price);
-    setTempStart(activityData.start);
-    setTempEnd(activityData.end);
-    setTempPer(activityData.per_person);
+    setTempContact(TempContact);
+    setTempEmail(TempEmail);
 
 
 }

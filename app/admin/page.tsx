@@ -7,6 +7,7 @@ import HotelInformation from './HotelInformation'
 import BookingHistory from './BookingHistory'
 import axios from 'axios'
 import POP_BookingID from '@/Components/POP_BookingID'
+import { getIndex, getRoom, getActivity } from '@/lib/supabase'
 
 
 
@@ -61,7 +62,9 @@ export default function page() {
             <p className='font-bold text-5xl text-white py-16'>Admin Dashboard</p>
             <p className='font-bold text-xl text-white py-16 mr-12'>Sign out</p>
           </div>
-
+          {/* <div className='flex w-full h-full'><img src={getRoom(`luxury`)}/></div>
+            <div className='flex w-full h-full'><img src={getIndex(`index1`)}></img></div>
+            <div className='flex w-full h-full'><img src={getActivity(`waterskii`)}></img></div> */}
           <div className="flex h-5/6 w-full">
             <div className="flex h-full w-2/12 bg-white drop-shadow-xl flex-col">
               <div className="flex w-full h-1/3 justify-center items-center font-bold text-2xl cursor-pointer hover:bg-blue-100 transform duration-300"

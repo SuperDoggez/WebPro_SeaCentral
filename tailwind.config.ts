@@ -15,6 +15,8 @@ const config: Config = {
       },
       colors: {
         "orange": "#F48B10",
+        "bluebase": "#00AAE0",
+        "grayprogress": "#D9D9D9"
       }
     },
   },

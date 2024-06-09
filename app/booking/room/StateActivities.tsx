@@ -96,7 +96,7 @@ export const StateActivities: FC<StateActivitiesProps> = ({
     console.log(roomvalues,"roomvalues")
 
     return (
-        <div>
+        <div className='flex'>
           <div>เลือกประเภทห้องพัก</div>
           <div>ChechkingDate: {checkInDate}</div>
           <div>CheckoutDate: {checkOutDate}</div>

@@ -6,6 +6,8 @@ import { StateActivities } from './StateActivities';
 import { StateInformation } from './StateInformation';
 import { StateInformationCheck } from './StateInformationCheck';
 import { StateConfirmation } from './StateConfirmation';
+import { ProgressBar } from '@/Components/ProgressBar';
+
 
 
 interface RoomDataProp {
@@ -63,6 +65,12 @@ export default function room() {
 
   return (
     <>
+      <div className="flex w-full h-36 bg-bluebase justify-center items-center">
+          <div className="flex w-2/3 h-full">
+            <ProgressBar step={StatePage + 1} />
+          </div>
+          
+        </div>
       {StatePage === 0 && (
         <StateRoomType
           roomvalues={roomvalues}

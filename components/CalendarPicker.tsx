@@ -4,7 +4,7 @@ import 'rsuite/dist/rsuite-no-reset.min.css';
 import { Button, DatePicker, InputGroup, InputNumber, Stack } from 'rsuite';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { el } from 'date-fns/locale';
+import { Icon } from '@iconify/react';
 
 
 export const CalendarPicker: React.FC = () => {
@@ -78,6 +78,7 @@ export const CalendarPicker: React.FC = () => {
         {statePage === 0 && 
             <div className="flex w-full h-2/3 bg-white">
               <div className="flex justify-center items-center w-2/5"> 
+                
                 <DatePicker 
                   placeholder = "Select Check In Date"
                   oneTap
@@ -102,7 +103,7 @@ export const CalendarPicker: React.FC = () => {
                   <Stack direction="column" alignItems="flex-start" spacing={10}>
                     <InputGroup>
                       <InputGroup.Button onClick={handleMinus}>-</InputGroup.Button>
-                      <InputNumber className='hidden' value={adult} onChange={setValueAdults} scrollable={false}/>
+                      <InputNumber className='hidden' value={adult} onChange={(value) => setValueAdults(Number(value))} scrollable={false}/>
                       <InputGroup.Button onClick={handlePlus}>+</InputGroup.Button>
                     </InputGroup>
                   </Stack>
@@ -112,7 +113,7 @@ export const CalendarPicker: React.FC = () => {
                 <Stack direction="column" alignItems="flex-start" spacing={10}>
                     <InputGroup>
                       <InputGroup.Button onClick={handleMinusChildren}>-</InputGroup.Button>
-                      <InputNumber className='hidden' value={children} onChange={setValueChildren} scrollable={false}/>
+                      <InputNumber className='hidden' value={children} onChange={(value) => setValueAdults(Number(value))} scrollable={false}/>
                       <InputGroup.Button onClick={handlePlusChildren}>+</InputGroup.Button>
                     </InputGroup>
                 </Stack>

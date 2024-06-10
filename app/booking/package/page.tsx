@@ -5,7 +5,7 @@ import { StateRoomType } from './StateRoomType';
 import { StateInformation } from './StateInformation';
 import { StateInformationCheck } from './StateInformationCheck';
 import { StateConfirmation } from './StateConfirmation';
-import { ProgressBar } from '@/Components/ProgressBar';
+import { ProgressBar } from '@/Components/ProgressBar2';
 
 
 

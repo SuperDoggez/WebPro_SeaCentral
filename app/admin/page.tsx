@@ -14,7 +14,7 @@ import Link from 'next/link'
 
 export default function page() {
   const { data: session, status } = useSession()
-
+  
   const router = useRouter()
   const [StatePage, setStatePage] = useState<number>(0);
   const [bookingRequest, setBookingRequest] = useState<any[]>([]);
@@ -62,7 +62,7 @@ export default function page() {
             
             <Link href="/" className='font-bold text-xl text-white py-16 ml-12 cursor-pointer'><img src={`${getIndex('logo')}`} width="100px"/></Link>
             <p className='font-bold text-5xl text-white py-16'>Admin Dashboard</p>
-            <p className='font-bold text-xl text-white py-16 mr-12'>Sign out</p>
+            <p className='font-bold text-xl text-white py-16 mr-12' onClick={() => signOut()}>Sign out</p>
           </div>
           {/* <div className='flex w-full h-full'><img src={getRoom(`luxury`)}/></div>
             <div className='flex w-full h-full'><img src={getIndex(`index1`)}></img></div>
@@ -98,7 +98,7 @@ export default function page() {
                           <div className="flex w-11/12 justify-between">
                             {/* <div className="flex">สถานะ : {booking.status}</div> */}
                             <div className="flex">สถานะ : รอการยืนยัน {booking.id}</div>
-                            <div className="flex">จองเมื่อ : {booking.datetime}</div>
+                            <div className="flex">จองเมื่อ : {booking.datetime.slice(0,10)} | {booking.datetime.slice(11,19)}</div>
                           </div>
                         </div>
                         <div className="flex w-full h-52">

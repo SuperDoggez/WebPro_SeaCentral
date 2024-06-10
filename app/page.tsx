@@ -134,9 +134,11 @@ export default function Home() {
               </div>
             </Link>
           </div>
-          <div className="flex w-full h-96 bg-cover bg-center mt-24 justify-center items-center" 
+          <div className="flex w-full h-96 bg-cover bg-center mt-24 justify-center items-center "
+          id='pri' 
           style={{backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.7)),url(${getIndex('activity_cover')})`}}>
-            <div className="relative text-4xl font-normal text-white">
+            <div className="relative text-4xl font-normal text-white"
+            id="footer">
               Special Offer:   Discount 10% for all activities
               <div className="relative text-4xl font-normal text-yellow-300">
                

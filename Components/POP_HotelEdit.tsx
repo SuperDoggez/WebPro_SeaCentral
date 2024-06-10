@@ -132,7 +132,7 @@ const POP_HotelEdit: React.FC<ModalProps> = ({ isOpen, onClose, roomId }) => {
                         className="font-bold h-fit py-4 pl-5 text-grayname mr-2 ml-8"
                      /> 
                         <Icon icon="solar:bath-bold" width="40"/> 
-                        <p className='pl-4'>Swimming Pool</p>
+                        <p className='pl-4'>Bath Tub</p>
                     </div>
                     
 

@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 import Handlebars from "handlebars";
-import { acceptedemailTemplate } from "./email-template";
+import { acceptedemailTemplate, declinedemailTemplate  } from "./email-template";
 
 interface email {
     email:string|undefined
@@ -31,7 +31,7 @@ export function acceptedemail(id:number, first_name:string, last_name:string ) {
 }
 
 export function declinedemail(id:number, first_name:string, last_name:string ) {
-    const template = Handlebars.compile(acceptedemailTemplate);
+    const template = Handlebars.compile(declinedemailTemplate);
     const htmlbody = template({
         id:id,
         first_name:first_name,

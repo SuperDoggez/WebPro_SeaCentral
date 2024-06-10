@@ -160,6 +160,17 @@ interface BookingInfo {
                             </div>
                         );
                     })}
+                        <div className='text-4xl font-bold w-5/6 mb-4 mt-12'>Package</div>
+                            {bookingInfo?.package_.map((activity) => {
+                                const packageCount = bookingInfo.packagecount.find((ac) => ac.id === activity.id);
+                                return (
+                                    <div key={activity.id}
+                                    className='flex bg-white h-24 w-4/6 drop-shadow-xl justify-start items-center mt-4'>
+                                        <div className='flex w-1/2 h-full justify-center items-center text-white font-bold bg-bluebase text-3xl '>{activity.name}</div>
+                                        <div className='flex w-1/2 h-full justify-center items-center font-bold  text-2xl '>{packageCount ? packageCount.count : 0}</div>
+                                    </div>
+                                );
+                            })}
                 </div>
                 <div className="flex h-full w-1/2 flex-col justify-center">
                     <div className="flex h-20 justify-center items-center">

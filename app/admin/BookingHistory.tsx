@@ -63,7 +63,7 @@ export default function BookingHistory () {
                             booking.status === 'pending' ? 'รอการยืนยัน' : booking.status === 'accept' ? 'ยืนยันแล้ว' : 'ถูกยกเลิก'
                             
                             } </div>
-                            <div className="flex">จองเมื่อ : {booking.datetime}</div>
+                            <div className="flex">จองเมื่อ : {booking.datetime.slice(0,10)} | {booking.datetime.slice(11,19)}</div>
                           </div>
                         </div>
                         <div className="flex w-full h-52">

@@ -52,7 +52,7 @@ export default function page () {
               <p className="flex text-white text-6xl font-bold drop-shadow-xl mb-24">ห้องพักของเรา</p>
             </div>
         </div>
-        <div className="flex flex-row w-full justify-around pt-16 pb-16">
+        <div className="flex flex-row w-full justify-around pt-16 pb-24">
         {roomData.map((room) => (
         <Link
           href={`/roominfo/${room.id}`}

@@ -43,6 +43,9 @@ export default function page()  {
         }
         fetchRoomType()
       },[])
+      if (!bookingData) {
+        return <div>Loading...</div>
+      }
   return (
     <div className='flex w-screen h-full items-center justify-center flex-col bg-slate-200 overflow-auto pb-16'>
       
@@ -63,7 +66,7 @@ export default function page()  {
             <Icon icon="carbon:event-schedule" width="50" height="50" className='mr-8'/>
             Check In
           </p>
-          <p className='text-2xl '>{bookingData.checkin}</p>
+          <p className='text-2xl '>{bookingData.checkin && bookingData.checkin.substring(0, 10)}</p>
         </div>
 
 
@@ -72,7 +75,7 @@ export default function page()  {
             <Icon icon="carbon:event-schedule" width="50" height="50" className='mr-8'/>
             Check Out 
           </p>
-          <p className='text-2xl '>{bookingData.checkout}</p>
+          <p className='text-2xl '>{bookingData.checkout && bookingData.checkout.substring(0, 10)}</p>
         </div>
 
         <div className="flex w-1/3 h-full flex-col justify-center items-center">

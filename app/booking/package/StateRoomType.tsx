@@ -68,9 +68,9 @@ export const StateRoomType: FC<StateRoomTypeProps> = ({
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('/api/room');
-        setRoomtype(response.data.room);
-        setroomValues(new Array(response.data.room.length).fill(0));
+        const response = await axios.get('/api/package');
+        setRoomtype(response.data.package);
+        setroomValues(new Array(response.data.package.length).fill(0));
 
       } catch {
         console.log('error');
@@ -182,7 +182,7 @@ export const StateRoomType: FC<StateRoomTypeProps> = ({
                   </div>
                 </div>
                 {!roomvalues.every(value => value === 0) ? (
-                  <div onClick={() => setStatePage(1)}
+                  <div onClick={() => setStatePage(2)}
                   className='flex w-2/4 bg-bluebase mb-16 justify-center cursor-pointer items-center rounded-full py-2 font-normal text-xl mt-8 text-white hover:shadow-lg transform duration-200  hover:bg-blue-300'>
                     ดำเนินการต่อ
                   </div> )

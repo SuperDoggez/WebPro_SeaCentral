@@ -70,7 +70,8 @@ export default function room() {
             <ProgressBar step={StatePage + 1} />
           </div>
           
-        </div>
+      </div>
+    <div className="flex h-full w-screen ">
       {StatePage === 0 && (
         <StateRoomType
           roomvalues={roomvalues}
@@ -105,6 +106,7 @@ export default function room() {
           ActivitiesType={ActivitiesType}
           setActivitiesType={setActivitiesType}
           total_price_room={total_price}
+          
         />
       )}
 
@@ -159,6 +161,8 @@ export default function room() {
           booking_id={booking_id}
         />
       )}
+
+      </div>  
     </>
   );
 }

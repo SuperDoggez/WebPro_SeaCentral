@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter,Kanit } from "next/font/google";
 import "./globals.css";
 import SessionProvider from "../Components/SessionProvider";
 import { getServerSession } from "next-auth";
 
 const inter = Inter({ subsets: ["latin"] });
+const bitter = Kanit({ subsets: ["latin"], weight: '400'});
 
 export const metadata: Metadata = {
   title: "Sea Central Hotel",
@@ -20,7 +21,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <SessionProvider session={session}>
-      <body className={inter.className}>{children}</body>
+      <body className="font-bitter">{children}</body>
       </SessionProvider>
     </html>
   );

@@ -5,4 +5,4 @@ const activity = `https://dfmtboqfsygnjttfuvgq.supabase.co/storage/v1/object/pub
 export const getActivity = (name:string) => `${activity}${name}.png`
 
 const room = `https://dfmtboqfsygnjttfuvgq.supabase.co/storage/v1/object/public/sea-central/room/`
-export const getRoom = (name:string) => `${room}${name}room.png`
+export const getRoom = (name:string) => `${room}${name}.png`

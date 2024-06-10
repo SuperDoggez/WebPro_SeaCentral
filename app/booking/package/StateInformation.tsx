@@ -228,7 +228,7 @@ export const StateInformation: FC<StateInformationProps> = ({
                                 <p className='text-lg'>จองให้กับผู้อื่น ฉันไม่ได้เป็นคนเข้าพักด้วยตนเอง</p>
                             </div>
                             <div className="flex w-full mb-8">
-                                <div onClick={() => setStatePage(1)}
+                                <div onClick={() => setStatePage(0)}
                                         className='flex w-1/12 bg-bluebase justify-center cursor-pointer items-center rounded-full py-2 font-normal text-xl mt-8 text-white hover:shadow-lg transform duration-200  hover:bg-blue-300'>
                                             ย้อนกลับ
                                 </div>      

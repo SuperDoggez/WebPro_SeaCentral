@@ -94,12 +94,11 @@ export const StateInformationCheck: FC<StateInformationCheckProps> = ({
 
   const combinedData = {
     ...formData,
-    room_type_id: roomvaluesArray,
+    package_id: roomvaluesArray,
     checkin,
     checkout,
     adult: IntAdult,
     children: IntChildren,
-    activity_id: ActivitiesvaluesArray,
     total_price,
   };
 

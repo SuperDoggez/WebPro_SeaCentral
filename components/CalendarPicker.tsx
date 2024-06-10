@@ -5,6 +5,7 @@ import { Button, DatePicker, InputGroup, InputNumber, Stack } from 'rsuite';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Icon } from '@iconify/react';
+import { stat } from 'fs';
 
 
 export const CalendarPicker: React.FC = () => {
@@ -17,10 +18,11 @@ export const CalendarPicker: React.FC = () => {
   const [defaultValue, setDefaultValue] = useState<string>('');
 
   const SearchSubmit = async () => {
-    try{
-       router.push(`/bookingcheck/${defaultValue}/`)
-    }catch{
-       console.log(Error)
+    if (statePage === 1) {
+      router.push(`/bookingcheck/${defaultValue}/`)
+    }
+    else if (statePage === 0) {
+      setStatePage(1)
     }
  }
 
@@ -74,21 +76,26 @@ export const CalendarPicker: React.FC = () => {
   return (
     <>
    
-        <div className="flex flex-col w-full h-full bg-black mt-40">
+        <div className="flex flex-col w-full h-56 bg-white">
         {statePage === 0 && 
-            <div className="flex w-full h-2/3 bg-white">
-              <div className="flex justify-center items-center w-2/5"> 
-                
-                <DatePicker 
-                  placeholder = "Select Check In Date"
-                  oneTap
-                  format="yyyy-MM-dd"
-                  onChange={handleCheckIn}
-                /> 
+            <div className="flex w-full h-2/3 bg-white ">
+              <div className="flex justify-center items-center w-2/5 gap-8 border-r border-gray-300"> 
+                <Icon icon="carbon:calendar" width="32"/>
+                <p className='text-xl'>Check In</p>
+                  
+                  <DatePicker 
+                  className='w-1/2 '
+                    placeholder = "Select Check In Date"
+                    oneTap
+                    format="yyyy-MM-dd"
+                    onChange={handleCheckIn}
+                  /> 
 
               </div>
 
-              <div className="flex justify-center items-center w-2/5"> 
+              <div className="flex justify-center items-center w-2/5 gap-8 border-r border-gray-300"> 
+                <Icon icon="carbon:calendar" width="32"/>
+                <p className='text-xl'>Check Out</p>
                 <DatePicker 
                   placeholder = "Select Check Out Date"
                   oneTap
@@ -98,25 +105,19 @@ export const CalendarPicker: React.FC = () => {
               </div>
 
               <div className="flex flex-col justify-center w-1/5"> 
-                <div className="flex w-full h-1/2 justify-center items-center">
-                  Adults
-                  <Stack direction="column" alignItems="flex-start" spacing={10}>
-                    <InputGroup>
-                      <InputGroup.Button onClick={handleMinus}>-</InputGroup.Button>
-                      <InputNumber className='hidden' value={adult} onChange={(value) => setValueAdults(Number(value))} scrollable={false}/>
-                      <InputGroup.Button onClick={handlePlus}>+</InputGroup.Button>
-                    </InputGroup>
-                  </Stack>
+                <div className="flex w-full h-1/2 justify-center items-center gap-4">
+                  <Icon icon="formkit:people" width="32"/>
+                  <p className='text-xl'>Adults</p>
+                    <Icon icon="ic:baseline-minus" onClick={handleMinus}/>
+                      <input className='w-12 h-12 text-center'  value={adult} onChange={(value) => setValueAdults(Number(value))}/>
+                    <Icon icon="ic:baseline-plus" onClick={handlePlus}/>
                 </div>
                 <div className="flex w-full h-1/2 justify-center items-center">  
-                Childrens
-                <Stack direction="column" alignItems="flex-start" spacing={10}>
-                    <InputGroup>
-                      <InputGroup.Button onClick={handleMinusChildren}>-</InputGroup.Button>
-                      <InputNumber className='hidden' value={children} onChange={(value) => setValueAdults(Number(value))} scrollable={false}/>
-                      <InputGroup.Button onClick={handlePlusChildren}>+</InputGroup.Button>
-                    </InputGroup>
-                </Stack>
+                    <Icon icon="mingcute:baby-line" width="32"/>
+                    <p className='text-xl'>Childrens</p>
+                    <Icon icon="ic:baseline-minus" onClick={handleMinusChildren}/>
+                    <input className='w-12 h-12 text-center'  value={children} onChange={(value) => setValueAdults(Number(value))}/>
+                    <Icon icon="ic:baseline-plus" onClick={handlePlusChildren}/>
                 </div>
                   
               </div>
@@ -127,35 +128,34 @@ export const CalendarPicker: React.FC = () => {
 
 
             {statePage === 1 && 
-              <div className="flex justify-center items-center flex-col">
+
+            <div 
+            className="flex w-8/12 xl:w-full h-full bg-gray-100">
+              <div className="flex justify-center w-full items-center flex-col drop-shadow-xl">
                 <input 
                   value={defaultValue}
                   onChange={handleChange}
                   type="search" 
                   id="search" 
-                  className="block rounded-3xl w-full p-4 text-lg text-gray-900 " placeholder="ระบุหมายเลขการจองเพื่อเช็คสถานะการจองห้องพัก" required />
-                <button 
-                  onClick={SearchSubmit} 
-                  className="flex text-white end-2.5 mt-8 bottom-1.5 bg-dark1 hover:bg-dark2 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-3xl text-xl px-14 py-2 md:absolute">ค้นหา</button>
+                  className="block rounded-3xl w-8/12 p-4 text-lg text-gray-900 " placeholder="ระบุหมายเลขการจองเพื่อเช็คสถานะการจองห้องพัก" required />
               </div>
-                
+            </div>
+
                 
             }
             <div className="flex w-full h-1/3 bg-orange">
               <div 
-                onClick={() => setStatePage(1)}
+                onClick={SearchSubmit}
                 className='flex font-bold w-1/3 justify-center items-center text-xl bg-slate-400'>
                   เช็คสถานะการจอง
                 </div>
                 
-                {/* <Link href={`/booking?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&adult=${adult}&children=${children}`} */}
                   <button 
                   onClick={BookingHandler}
-                  disabled={checkInDate === '' || checkOutDate === '' || adult === 0 }
+                  disabled={statePage === 0 && (checkInDate === '' || checkOutDate === '' || adult === 0)}
                   className='flex font-bold w-2/3 justify-center items-center text-xl'>
                     จองห้องพัก
                   </button>
-                {/* </Link> */}
             </div>
         </div>
     </>

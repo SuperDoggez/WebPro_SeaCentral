@@ -40,7 +40,7 @@ export default function Booking() {
               <Icon icon="carbon:event-schedule" width="50" height="50" className='mr-8'/>
               Check Out 
             </p>
-            <p className='text-2xl '>{checkInDate}</p>
+            <p className='text-2xl '>{checkOutDate}</p>
           </div>
           <div className="flex w-1/3 h-full flex-col justify-center items-center">
             <p className='text-2xl flex h-1/2 w-full justify-start items-center ml-'>
@@ -59,7 +59,7 @@ export default function Booking() {
         <div className="flex w-full h-full justify-center gap-52 items-center">
           <Link 
           href={`/booking/package?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&adult=${adult}&children=${children}`}
-          className="flex bg-white flex-col shadow-lg w-2/12 h-4/6 hover:drop-shadow-xl transform duration-300 hover:scale-105 cursor-pointer">
+          className="flex bg-white flex-col shadow-lg w-2/12 h-120 min-w-96 hover:drop-shadow-xl transform duration-300 hover:scale-105 cursor-pointer">
             <div className="flex w-full h-4/6 bg-cover bg-center" style={{backgroundImage: `url(${getIndex(`index4`)})`}} />
               <div className="flex w-full h-2/6 flex-col justify-start items-center ">
                 <div className="flex w-full font-bold text-3xl justify-center items-center pt-8">
@@ -79,7 +79,7 @@ export default function Booking() {
 
           <Link
           href={`/booking/room?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&adult=${adult}&children=${children}`} 
-          className="flex bg-white shadow-lg w-2/12 h-4/6 flex-col hover:drop-shadow-xl transform duration-300 hover:scale-105 cursor-pointer">
+          className="flex bg-white shadow-lg w-2/12 h-120 min-w-96 flex-col hover:drop-shadow-xl transform duration-300 hover:scale-105 cursor-pointer">
             <div className="flex w-full h-4/6 bg-cover bg-center" style={{backgroundImage: `url(${getIndex(`index3`)})`}} />
 
             <div className="flex w-full h-2/6 flex-col justify-start items-center ">

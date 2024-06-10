@@ -10,6 +10,7 @@ export async function GET(req: Request) {
                 checkin:true,
                 checkout:true,
                 children:true,
+                adult:true,
                 datetime:true,
                 status:true,
                 Book_room: {

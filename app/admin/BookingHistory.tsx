@@ -1,23 +1,19 @@
-'use client'
-
 import { useSession, signOut } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import HotelInformation from './HotelInformation'
-import BookingHistory from './BookingHistory'
 import axios from 'axios'
 import POP_BookingID from '@/Components/POP_BookingID'
-import { getIndex, getRoom, getActivity } from '@/lib/supabase'
 import { Icon } from '@iconify/react'
-import Link from 'next/link'
 
 
-export default function page() {
-  const { data: session, status } = useSession()
-  
+
+
+export default function BookingHistory () {
+
   const router = useRouter()
   const [StatePage, setStatePage] = useState<number>(0);
-  const [bookingRequest, setBookingRequest] = useState<any[]>([]);
+  const [bookingHistory, setBookingHistory] = useState<any[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedBookingId, setSelectedBookingId] = useState<number | null>(null);
 
@@ -41,8 +37,8 @@ export default function page() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('/api/admin/bookrequest');
-        setBookingRequest(response.data.booking);
+        const response = await axios.get('/api/admin/bookhistory');
+        setBookingHistory(response.data.book);
 
       } catch {
         console.log('error');
@@ -51,53 +47,22 @@ export default function page() {
     fetchData();
   },[StatePage])
 
-  console.log(bookingRequest, "bookingRequest")
+
 
   return (
-    status === 'authenticated' &&
-    session.user && (
-      <>
-        <div className="flex h-screen w-screen flex-col">
-          <div className="flex w-full h-1/6 bg-blue-400 justify-between items-center">
-            
-            <Link href="/" className='font-bold text-xl text-white py-16 ml-12 cursor-pointer'><img src={`${getIndex('logo')}`} width="100px"/></Link>
-            <p className='font-bold text-5xl text-white py-16'>Admin Dashboard</p>
-            <p className='font-bold text-xl text-white py-16 mr-12' onClick={() => signOut()}>Sign out</p>
-          </div>
-          {/* <div className='flex w-full h-full'><img src={getRoom(`luxury`)}/></div>
-            <div className='flex w-full h-full'><img src={getIndex(`index1`)}></img></div>
-            <div className='flex w-full h-full'><img src={getActivity(`waterskii`)}></img></div> */}
-          <div className="flex h-5/6 w-full">
-            <div className="flex h-full w-2/12 bg-white drop-shadow-xl flex-col">
-              <div className="flex w-full h-1/3 justify-center items-center font-bold text-2xl cursor-pointer hover:bg-blue-100 transform duration-300"
-              onClick={() => setStatePage(0)}>
-                Booking Request
-              </div>
-
-              <div className="flex w-full h-1/3 justify-center items-center font-bold text-2xl cursor-pointer hover:bg-blue-100 transform duration-300"
-              onClick={() => setStatePage(1)}>
-                Booking History
-              </div>
-
-              <div className="flex w-full h-1/3 justify-center items-center font-bold text-2xl cursor-pointer hover:bg-blue-100 transform duration-300"
-              onClick={() => setStatePage(2)}>
-              Hotel Information
-              </div>
-
-            </div>
-            <div className="flex bg-neutral-100 w-10/12 h-full overflow-auto ">
-              {StatePage === 0 && (
-
-                <>
-                  <div className='flex justify-start items-center h-full mt-12 w-full flex-col gap-12 drop-shadow-xl'>
-                    {bookingRequest.map((booking, index) => (
+    <>
+      <div className='flex justify-start items-center h-full mt-12 w-full flex-col gap-12 drop-shadow-xl'>
+                    {bookingHistory.map((booking, index) => (
                       <div 
                       key={index}
                       className='flex w-11/12 h-68 bg-white flex-col rounded-2xl'>
                         <div className="flex w-full h-12 justify-center items-center text-white font-bold text-xl bg-blue-400 rounded-t-2xl">
                           <div className="flex w-11/12 justify-between">
                             {/* <div className="flex">สถานะ : {booking.status}</div> */}
-                            <div className="flex">สถานะ : รอการยืนยัน {booking.id}</div>
+                            <div className="flex">สถานะ : {
+                            booking.status === 'pending' ? 'รอการยืนยัน' : booking.status === 'accept' ? 'ยืนยันแล้ว' : 'ถูกยกเลิก'
+                            
+                            } </div>
                             <div className="flex">จองเมื่อ : {booking.datetime.slice(0,10)} | {booking.datetime.slice(11,19)}</div>
                           </div>
                         </div>
@@ -171,16 +136,10 @@ export default function page() {
                       
 
                   </div>
-                  <POP_BookingID isOpen={isModalOpen} onClose={handleCloseModal} bookingId={selectedBookingId} />
-                </>
-              )}
-              {StatePage === 1 && <BookingHistory />}
-              {StatePage === 2 && <HotelInformation />}
-            </div>
-          </div>
-        </div>
         
-      </>
-    )
+          <POP_BookingID isOpen={isModalOpen} onClose={handleCloseModal} bookingId={selectedBookingId} />
+
+
+    </>
   )
 }
